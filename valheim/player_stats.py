@@ -114,7 +114,7 @@ def print_trending_users(trend_analysis, min_trend_percentage=10):
 
     if not trending_users:
         message += "No users showing significant trending activity."
-        return
+        return message
 
     # Sort by trend percentage
     for username, data in sorted(
