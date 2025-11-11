@@ -1,0 +1,4 @@
+#log_file: /home/steam/enshroudedserver/gg_logs/enshrouded_server.log
+journalctl: enshrouded.service
+discord_webhook_url: ""
+discord_webhook: ""
