@@ -1,4 +1,8 @@
 #log_file: /home/steam/enshroudedserver/gg_logs/enshrouded_server.log
 journalctl: enshrouded.service
+pattern: "Player '(.+?)' joined"
+logout_pattern: "Player '(.+?)' left"
 discord_webhook_url: ""
 discord_webhook: ""
+app_id: "2278520"
+appinfo_file_new: "/tmp/enshrouded_app_state.json"

@@ -1,5 +1,4 @@
 apprise
 pyyaml
 watchdog
-subprocess
 requests

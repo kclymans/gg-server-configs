@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import threading
+import json
 import yaml
 import re
 import time
@@ -8,6 +10,73 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import subprocess
 import requests
+
+UPDATE_INTERVAL=300 # seconds
+
+def check_for_updates(app_id : str, state_file :str, restart_callback, webhook_url: str):
+    """
+    app_id:       Steam App ID (string or int)
+    state_file:   Where we store last known change_number (e.g. '/tmp/app_state.json')
+    restart_callback: Function to call when update is needed
+    """
+
+    # Load previous change_number (if exists)
+    last_change_number = None
+    if os.path.exists(state_file):
+        try:
+            with open(state_file, "r") as f:
+                data = json.load(f)
+                last_change_number = data.get("change_number")
+        except:
+            pass
+    while True:
+        try:
+            response = requests.get(f"https://api.steamcmd.net/v1/info/{app_id}",timeout=10)
+            response.raise_for_status()
+            api_data = response.json()
+            change_number = (
+                api_data.get("data", {})
+                .get(str(app_id), {})
+                .get("_change_number")
+            )
+            if change_number is None:
+                print("Warning: '_change_number' missing from API response")
+            else:
+                print(f"Current change_number = {change_number}")
+
+                # Compare
+                if last_change_number is not None and change_number != last_change_number:
+                    print("Update detected! Triggering restart...")
+                    print(f"Detected new change_number = {change_number} different from {last_change_number}")
+                    send_webhook(webhook_url=webhook_url,player_name="SYSTEM",msg_kind="updating & restarting, kindly update your clients")
+                    restart_callback(webhook_url)
+
+                # Store this value for next loop
+                last_change_number = change_number
+                with open(state_file, "w") as f:
+                    json.dump({"change_number": change_number}, f)
+
+        except Exception as e:
+            print(f"Error checking for updates: {e}")
+        time.sleep(UPDATE_INTERVAL)
+def restart_program(webhook: str):
+    print("Restarting pod...")
+    try:
+        os.remove("/var/lib/containers/storage/volumes/systemd-enshrouded-base/_data/steamapps/appmanifest_2278520.acf")
+        os.remove("/var/lib/containers/storage/volumes/systemd-enshrouded-base/_data/steamapps/appmanifest_228980.acf")
+    except:
+        print("Unable to remove file")
+        pass
+    try:
+        subprocess.run(["systemctl","restart","enshrouded"])
+        # FIXME
+        #output = subprocess.run(["systemctl","status" "enshrouded"], capture_output=True)
+        #status = output.stdout.decode().strip()
+        #print(status)
+    except:
+        print("well thats not good")
+        send_webhook(webhook_url=webhook,player_name="SYSTEM",msg_kind="Well there goes that SLA. Someone might want to ping an admin. Server might be in trouble")
+        pass
 
 class LogFileHandler(FileSystemEventHandler):
     def __init__(self, log_file, pattern, apprise_client):
@@ -60,6 +129,7 @@ class LogFileHandler(FileSystemEventHandler):
             print(f"Log file {self.log_file} was recreated. Resetting position.")
             self._file_position = 0
             self._read_new_lines()
+
     def on_moved(self, event):
         """Triggered when the log file is rotated (moved to a new name)."""
         if event.src_path == self.log_file:
@@ -96,14 +166,13 @@ def local_file(log_file:str,pattern:str, discord_url:str):
         observer.stop()
 
     observer.join()
-
 def send_webhook(webhook_url: str, player_name: str, msg_kind: str):
     """Send a webhook with player info. Not sure how Bob pub/sub thing did this otherwise I would reuse it"""
-    data = {"content":f"Player {player_name} is {msg_kind}"}
+    data = {"content":f"{player_name} is {msg_kind}"}
     try:
         response = requests.post(webhook_url, json=data, timeout=5)
         response.raise_for_status()
-        print(f"[+] Webhook sent for player: {player_name}")
+        print(f"[+] Webhook sent for {player_name}")
     except requests.RequestException as e:
         print(f"[!] Failed to send webhook: {e}")
 
@@ -119,18 +188,33 @@ def tail_journalctl(service:str, pattern:str, logout_pattern:str, discord_url:st
         if match:
             player_name = match.group(1)
             print(f"[+] Detected login: {player_name}")
-            send_webhook(discord_url, player_name, "online!")
+            send_webhook(discord_url, f"Player: {player_name}", "online!")
         if logout:
             player_name = logout.group(1)
             print(f"[+] Detected logout :{player_name}")
-            send_webhook(discord_url, player_name, "logged off!")
-            
+            send_webhook(discord_url, f"Player: {player_name}", "logged off!")
+
+
 def main():
     config = load_config()
 
     pattern = re.compile(config["pattern"], re.IGNORECASE)
     logout_pattern = re.compile(config["logout_pattern"], re.IGNORECASE)
     discord_url = config["discord_webhook"]
+
+    # Start background update check
+    update_thread = threading.Thread(
+        target=check_for_updates,
+        args=(
+            config["app_id"],
+            config["appinfo_file_new"],
+            restart_program,
+            config["discord_webhook_url"]
+        ),
+        daemon=True
+    )
+    update_thread.start()
+
 
     if "log_file" in config:
         log_file = config["log_file"]
