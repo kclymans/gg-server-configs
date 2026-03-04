@@ -31,7 +31,7 @@
     <config name="CustomVehiclePickUp" value="true" />
     <config name="CustomVehicleSecurity" value="false" />
     <config name="CustomRestrictiveHealing" value="true" />
-    <config name="CustomRespawnPenalty" value="true" />
+    <config name="CustomRespawnPenalty" value="false" />
     <config name="CustomRestrictHires" value="default" />
     <config name="CustomCompanionInventory" value="always" />
     <config name="CustomQualityOfLife" value="default" />
