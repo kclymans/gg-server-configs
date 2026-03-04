@@ -1,0 +1,30 @@
+[Unit]
+Description=7 Days to Die Log Watcher Service
+After=network.target
+
+[Service]
+Type=simple
+
+# Run as a non-root user if possible
+User=steam
+Group=steam
+
+# Working directory
+WorkingDirectory=/opt/log_watcher
+
+# Use the virtual environment's python
+ExecStart=/opt/log_watcher/venv/bin/python /opt/log_watcher/watch.py
+
+# Restart behavior
+Restart=always
+RestartSec=5
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+
+# Environment (optional)
+# Environment="PYTHONUNBUFFERED=1"
+
+[Install]
+WantedBy=multi-user.target
