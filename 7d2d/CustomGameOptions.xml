@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <customgameoptions>
-    <config name="CustomScenario" value="none" />
+    <config name="CustomScenario" value="purge" />
     <config name="CustomInfestedHives" value="no" />
     <config name="CustomSkipSpawnConfirmation" value="false" />
     <config name="CustomBiomeSpawn" value="random" />
@@ -18,7 +18,7 @@
     <config name="CustomFeelingLucky" value="false" />
     <config name="CustomOverrideOpacity" value="true" />
     <config name="CustomConsolePopUp" value="true" />
-    <config name="CustomCrosshairHUD" value="true" />
+    <config name="CustomCrosshairHUD" value="false" />
     <config name="CustomCrosshairTexture" value="default" />
     <config name="CustomCrosshairColor" value="default" />
     <config name="CustomPartyXPMultiplier" value="0%" />
@@ -31,7 +31,7 @@
     <config name="CustomVehiclePickUp" value="true" />
     <config name="CustomVehicleSecurity" value="false" />
     <config name="CustomRestrictiveHealing" value="true" />
-    <config name="CustomRespawnPenalty" value="true" />
+    <config name="CustomRespawnPenalty" value="false" />
     <config name="CustomRestrictHires" value="default" />
     <config name="CustomCompanionInventory" value="always" />
     <config name="CustomQualityOfLife" value="default" />
