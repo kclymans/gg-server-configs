@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 cd /7d2d
 
 PARAMS=$@
@@ -29,7 +29,8 @@ export LD_LIBRARY_PATH=.
 #export MALLOC_CHECK_=0
 
 
-remote_config=https://raw.githubusercontent.com/kclymans/gg-server-configs/refs/heads/main/7d2d/serverconfig.xml
+remote_serverconfig=https://raw.githubusercontent.com/kclymans/gg-server-configs/refs/heads/main/7d2d/serverconfig.xml
+remote_customoptions=https://raw.githubusercontent.com/kclymans/gg-server-configs/refs/heads/main/7d2d/CustomGameOptions.xml
 source "$HOME/.secrets"
 
 # Define variables to check
@@ -39,17 +40,22 @@ vars=("SERVER_PASS")
 for var in "${vars[@]}"; do
     if [[ ! -v $var ]]; then
         echo "$var is not set"
-        exit 0
+        exit 1
     elif [[ -z "${!var}" ]]; then
         echo "$var is set to the empty string"
-        exit 0
+        exit 1
     else
         echo "$var FOUND: ${!var}"
     fi
 done
 
-# Download the remote config and update placeholders in one sed command
-curl -s -o "$CONFIGFILE" "$remote_config" && \
-sed -i -e "s/SERVER_PASS/$SERVER_PASS/g" "$CONFIGFILE"
+# Download the remote configs and update placeholders
+CONFIGFILE_DIR=$(dirname "$CONFIGFILE")
+CUSTOM_OPTIONS_FILE="${CONFIGFILE_DIR}/CustomGameOptions.xml"
+
+curl -s -o "$CONFIGFILE" "$remote_serverconfig" && \
+sed -i -e "s|SERVER_PASS|$SERVER_PASS|g" "$CONFIGFILE"
+
+curl -s -o "$CUSTOM_OPTIONS_FILE" "$remote_customoptions"
 
 exec ./7DaysToDieServer.x86_64 -logfile /7d2d/7DaysToDieServer_Data/output_log__`date +%Y-%m-%d__%H-%M-%S`.txt -quit -batchmode -nographics -dedicated $PARAMS
