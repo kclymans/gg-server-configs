@@ -27,10 +27,10 @@ class LogEventHandler(FileSystemEventHandler):
         latest_file = max(files, key=os.path.getmtime)
 
         if latest_file != self.current_file:
-            if not init==True:
+            if not init:
                 send_sys_msg(f"New log file detected, server restarted? {latest_file}")
             else:
-                send_sys_msg(f"Log watcher process stated. Using {latest_file}")
+                send_sys_msg(f"Log watcher process started. Using {latest_file}")
             # print(f"Switching to new log file: {latest_file}")
             if self.file_handle:
                 self.file_handle.close()
@@ -59,7 +59,7 @@ class LogEventHandler(FileSystemEventHandler):
         """Reads new lines from the current file."""
         if not self.file_handle:
             return
-       while True:
+        while True:
             where = self.file_handle.tell()
             line = self.file_handle.readline()
             if not line:
