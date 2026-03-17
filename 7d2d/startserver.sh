@@ -34,7 +34,7 @@ remote_customoptions=https://raw.githubusercontent.com/kclymans/gg-server-config
 source "$HOME/.secrets"
 
 # Define variables to check
-vars=("SERVER_PASS")
+vars=("SERVER_PASS","TELNET_PASS")
 
 # Loop through each variable to check if it is set and non-empty
 for var in "${vars[@]}"; do
