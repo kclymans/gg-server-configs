@@ -1,0 +1,9 @@
+[Unit]
+Description=7DTD Time Reset
+After=network.target
+
+[Service]
+Type=oneshot
+User=steam
+Group=steam
+ExecStart=/opt/7d2dTimeReset/venv/bin/python /opt/7d2dTimeReset/main.py
