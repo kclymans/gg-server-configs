@@ -1,0 +1,17 @@
+lp
+2026-03-14T19:43:16 394.479 INF Executing command 'lp' by Telnet from 127.0.0.1:46610
+Total of 0 in the game
+
+lp
+2026-03-14T19:43:54 432.501 INF Executing command 'lp' by Telnet from 127.0.0.1:46610
+0. id=171, Lost, pos=(342.4, 49.0, -541.9), rot=(0.0, 194.1, 0.0), remote=True, health=112, deaths=10, zombies=225, players=3, score=175, level=12, pltfmid=Steam_76561198025499751, crossid=EOS_000200a5aac44b81aa8521f6cf48f412, ip=94.226.230.80, ping=13
+Total of 1 in the game
+
+gettime
+2026-03-14T19:44:36 474.341 INF Executing command 'gettime' by Telnet from 127.0.0.1:46610
+Day 12, 19:53
+
+settime 13 6 00
+settime 13 06 00
+settime 13 21 00
+> Set time to 294000
