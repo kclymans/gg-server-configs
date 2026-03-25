@@ -1,13 +1,37 @@
-installed vanilla 7d2d
-SteamCMD is in steam user home folder
-        force_install_dir /7d2d
-        login anonymous
-        app_update 294420 -beta v2.4
-extracted MOD:
-        REBIRTH EXPERIMENTAL 2025.12.08 2115 - 7dtd v2.4 b7.zip
+# Installation instructions
 
-User notes:
-        Install 7d2d version 2.4
+## SteamCMD (on RHEL)
+Run as user "steam"
 
-7d2d_notif.service
-        for discord notifs
+```bash
+mkdir ~/Steam && cd ~/Steam
+curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
+```
+
+## Install 7D2D
+Run as user "steam". The rebirth mod currently requires **7D2D V2.4**
+```bash
+cd ~/Steam
+./steamcmd.sh
+force_install_dir /7d2d
+login anonymous
+app_update 294420 -beta v2.4
+```
+
+## Rebirth
+Installed version: **REBIRTH EXPERIMENTAL 2025.12.08 2115 - 7dtd v2.4 b7.zip**
+
+Extract the zip file in /7d2d/Mods
+
+# Custom services
+
+- 7d2d_notif.service: discord notifs for when ppl log in or die
+- TimeReset: if only X players online, after 21:00 reset time to 06:00
+
+# Other components
+
+## Alloy / Loki / Grafana
+
+- Alloy collects the logs
+- Loki stores the logs
+- Grafana for visualization
