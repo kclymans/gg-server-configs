@@ -1,0 +1,2327 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "effc1dwy7ru2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 0,
+        "y": 0
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "last_over_time(\r\n    {rebirth_run=\"1\"} |= \"INFO Detected day\"\r\n    | regexp `INFO Detected day (?P<currentday>\\d+),`\r\n    | unwrap currentday\r\n    [$__range]\r\n)",
+          "queryType": "instant",
+          "refId": "A"
+        }
+      ],
+      "title": "Current Day",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "effc1dwy7ru2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 2,
+        "y": 0
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "limit": 1,
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "last_over_time(\r\n    {rebirth_run=\"1\"} |= \"BloodMoon SetDay\"\r\n    | regexp `BloodMoon SetDay: day (?P<ingameday>\\d+),`\r\n    | unwrap ingameday\r\n    [$__range]\r\n)",
+          "queryType": "instant",
+          "refId": "A"
+        }
+      ],
+      "title": "",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value #A": false,
+              "detected_level": true,
+              "filename": true,
+              "host": true,
+              "job": true,
+              "level": true,
+              "rebirth_run": true,
+              "service_name": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Value #A": "Next Bloodmoon",
+              "Value #A 1773528573946": "Next Bloodmoon",
+              "Value #B 1773528573946": "Current Day",
+              "job": ""
+            }
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "effc1dwy7ru2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 7,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 1
+              },
+              {
+                "color": "orange",
+                "value": 2
+              },
+              {
+                "color": "yellow",
+                "value": 3
+              },
+              {
+                "color": "green",
+                "value": 4
+              }
+            ]
+          },
+          "unit": "days"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "id": 14,
+      "options": {
+        "displayMode": "lcd",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 0,
+        "namePlacement": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "max(\r\n    last_over_time (\r\n        {rebirth_run=\"1\"} |= \"INFO Detected day\"\r\n        | regexp `INFO Detected day (?P<currentday>\\d+),`\r\n        | label_format metric=\"currentday\"\r\n        | unwrap currentday\r\n        [$__range]\r\n    )\r\n) by (metric)",
+          "legendFormat": "currentday",
+          "queryType": "instant",
+          "refId": "A",
+          "step": ""
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "max(\r\n    last_over_time (\r\n        {job=\"7d2d\",rebirth_run=\"1\"} |= \"INF BloodMoon SetDay\"\r\n        | regexp `INF BloodMoon SetDay: day (?P<currentday>\\d+), last day (?P<lastday>\\d+), freq (?P<freq>\\d+), range`\r\n        | label_format metric=\"freq\"\r\n        | unwrap freq\r\n        [$__range]\r\n    )\r\n) by (metric)",
+          "legendFormat": "{{freq}}",
+          "queryType": "instant",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "max(\r\n    last_over_time (\r\n        {job=\"7d2d\",rebirth_run=\"1\"} |= \"INF BloodMoon SetDay\"\r\n        | regexp `INF BloodMoon SetDay: day (?P<currentday>\\d+), last day (?P<lastday>\\d+), freq (?P<freq>\\d+), range`\r\n        | label_format metric=\"lastday\"\r\n        | unwrap lastday\r\n        [$__range]\r\n    )\r\n) by (metric)",
+          "queryType": "instant",
+          "refId": "C"
+        }
+      ],
+      "title": "Days until Bloodmoon",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "Time",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "metric 1": true,
+              "metric 2": true,
+              "metric 3": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Value #A": "currentday",
+              "Value #B": "freq",
+              "Value #C": "lastday",
+              "currentday": "Current day",
+              "freq": "Frequency",
+              "lastday": "Last day"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Next day",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "lastday"
+                }
+              },
+              "operator": "+",
+              "right": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "freq"
+                }
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Days remaining",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Next day"
+                }
+              },
+              "operator": "-",
+              "right": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "currentday"
+                }
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "effc1dwy7ru2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 8,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "count_over_time(\r\n    {job=\"7d2d\",rebirth_run=\"1\"} |= \"BloodMoon starting for day\"\r\n    [$__range]\r\n  )",
+          "legendFormat": "",
+          "queryType": "instant",
+          "refId": "A"
+        }
+      ],
+      "title": "Bloodmoons passed",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Time": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Line": true,
+              "Time": true,
+              "bm_day": false,
+              "detected_level": true,
+              "filename": true,
+              "host": true,
+              "id": true,
+              "job": true,
+              "labelTypes": true,
+              "labels": true,
+              "level": true,
+              "service_name": true,
+              "tsNs": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "orderByMode": "manual",
+            "renameByName": {
+              "Time": "",
+              "Time (count)": "Number of blood moons",
+              "Value #A": "Blood Moons",
+              "bm_day": "Day",
+              "bm_day (count)": "Number of blood moons"
+            }
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "effc1dwy7ru2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 10,
+        "y": 0
+      },
+      "id": 17,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "count_over_time(\r\n    {rebirth_run=\"1\"} |= \"resetting day\"\r\n    [$__range]\r\n)",
+          "queryType": "instant",
+          "refId": "A"
+        }
+      ],
+      "title": "Time Resets",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "detected_level": true,
+              "filename": true,
+              "host": true,
+              "job": true,
+              "service_name": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Value": "Number of time resets",
+              "Value #A": "Resets",
+              "host": ""
+            }
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "effc1dwy7ru2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "550"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Bright"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "171"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Lost"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "233"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Dude"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "202"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "WhichWitch"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "356"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "haas2"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "579"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Galiwyr"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": true
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "last_over_time(\r\n  {job=\"7d2d\",rebirth_run=\"1\"} |= \"gameStage\"\r\n  | regexp `Player id (?P<playerID>\\d+), gameStage (?P<GameStage>\\d+)`\r\n  | label_format playerID=\"{{.playerID}}\"\r\n  | unwrap GameStage\r\n  [$__range]\r\n) by (playerID)",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Current Game Stage",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "labelsToFields": true,
+            "reducers": [
+              "lastNotNull"
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Field": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Field": "",
+              "Last *": "Game Stage",
+              "playerID": "Player",
+              "playerid": "Player"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Game Stage"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {
+            "limitField": "6"
+          }
+        },
+        {
+          "id": "rowsToFields",
+          "options": {
+            "mappings": [
+              {
+                "fieldName": "Player",
+                "handlerKey": "field.name"
+              },
+              {
+                "fieldName": "Game Stage",
+                "handlerKey": "field.value"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "effc1dwy7ru2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "max": 30,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "K/D"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-GrYlRd"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total Time Online"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "m"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "K/D"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "lcd",
+                  "type": "gauge",
+                  "valueDisplayMode": "text"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AVG time online"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "m"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AVG time alive"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "m"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "id": 4,
+      "options": {
+        "cellHeight": "sm",
+        "frameIndex": 4,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "K/D"
+          }
+        ]
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum by(player)(\r\n  count_over_time(\r\n    {job=\"7d2d\",rebirth_run=\"1\"} |= \"joined the game\"\r\n    | regexp `Player '(?P<player>[^']+)' joined`\r\n    [$__range]\r\n  )\r\n)",
+          "queryType": "instant",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "  sum by(player)(\r\n    sum_over_time(\r\n        {job=\"7d2d\",rebirth_run=\"1\"} |= \"disconnected after\"\r\n        | regexp `Player (?P<player>\\S+) disconnected after (?P<minutes>[0-9.]+) minutes`\r\n        | unwrap minutes\r\n        [$__range]\r\n    )\r\n  )",
+          "queryType": "instant",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum by(player)(\r\n  count_over_time(\r\n    {job=\"7d2d\",rebirth_run=\"1\"} |= \"died\"\r\n    | regexp `Player '(?P<player>[^']+)' died`\r\n    | player != \"\"\r\n    [$__range]\r\n  )\r\n)",
+          "queryType": "instant",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum by(player)(\r\n  count_over_time(\r\n    {job=\"7d2d\",rebirth_run=\"1\"} |= \"killed by\"\r\n    | regexp `Entity (?P<victim>.+) (?P<victimID>\\d+) killed by (?P<player>.+) (?P<playerID>\\d+)`\r\n    | player=~\"^(Dude|haas2|Lost|Galiwyr|Bright|WhichWitch)$\" \r\n    [$__range]\r\n  )\r\n)",
+          "queryType": "instant",
+          "refId": "D"
+        }
+      ],
+      "title": "Leaderboard",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "player",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Time 3": true,
+              "Time 4": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "Time 1": 1,
+              "Time 2": 3,
+              "Time 3": 5,
+              "Time 4": 7,
+              "Value #A": 4,
+              "Value #B": 2,
+              "Value #C": 6,
+              "Value #D": 8,
+              "player": 0
+            },
+            "orderByMode": "manual",
+            "renameByName": {
+              "Time 4": "",
+              "Value #A": "Total Time Online",
+              "Value #B": "Sessions",
+              "Value #C": "Deaths",
+              "Value #D": "Kills",
+              "player": "Player"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "K/D",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Kills"
+                }
+              },
+              "operator": "/",
+              "right": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Deaths"
+                }
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "include": [
+                "Kills",
+                "Deaths"
+              ],
+              "reducer": "lastNotNull"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Total Time Online": false
+            },
+            "includeByName": {},
+            "indexByName": {
+              "Deaths": 3,
+              "K/D": 1,
+              "Kills": 2,
+              "Player": 0,
+              "Sessions": 4,
+              "Total Time Online": 5
+            },
+            "renameByName": {
+              "Total Time Online": ""
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "K/D"
+              }
+            ]
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "AVG time online",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Total Time Online"
+                }
+              },
+              "operator": "/",
+              "right": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Sessions"
+                }
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "AVG time alive",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Total Time Online"
+                }
+              },
+              "operator": "/",
+              "right": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Deaths"
+                }
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "effc1dwy7ru2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "decimals": 1,
+          "fieldMinMax": false,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "m"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byType",
+              "options": "string"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/.*/",
+          "limit": 20,
+          "values": true
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sort_desc(\r\n  sum by(player)(\r\n    sum_over_time(\r\n        {job=\"7d2d\",rebirth_run=\"1\"} |= \"disconnected after\"\r\n        | regexp `Player (?P<player>\\S+) disconnected after (?P<minutes>[0-9.]+) minutes`\r\n        | unwrap minutes\r\n        [$__range]\r\n    )\r\n  )\r\n)",
+          "queryType": "instant",
+          "refId": "A"
+        }
+      ],
+      "title": "Total time online",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Time": "",
+              "Value #A": "Time Online",
+              "player": "Player"
+            }
+          }
+        },
+        {
+          "id": "rowsToFields",
+          "options": {
+            "mappings": [
+              {
+                "fieldName": "Player",
+                "handlerKey": "field.name"
+              },
+              {
+                "fieldName": "Time Online",
+                "handlerKey": "field.value"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "uid": "effc1dwy7ru2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "color-text"
+            },
+            "filterable": false,
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "kills"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byType",
+              "options": "string"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 17,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 5,
+      "options": {
+        "cellHeight": "sm",
+        "enablePagination": false,
+        "showHeader": true
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "  count_over_time(\r\n    {job=\"7d2d\",rebirth_run=\"1\"} |= \"killed by\"\r\n    | regexp `Entity (?P<victim>.+) (?P<victimID>\\d+) killed by (?P<killer>.+) (?P<killerID>\\d+)`\r\n    | killer=~\"^(Dude|haas2|Lost|Galiwyr|Bright|WhichWitch)$\" | keep victim,killer\r\n    [$__range]\r\n  )",
+          "queryType": "instant",
+          "refId": "A",
+          "step": "1d"
+        }
+      ],
+      "title": "Victim heatmap",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Time": "",
+              "Value #A": "kills",
+              "killer": ""
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "kills"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {
+            "limitField": "40"
+          }
+        },
+        {
+          "id": "groupingToMatrix",
+          "options": {
+            "columnField": "killer",
+            "emptyValue": "zero",
+            "rowField": "victim",
+            "valueField": "kills"
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "effc1dwy7ru2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-viridis"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 27,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "id": 6,
+      "options": {
+        "barRadius": 0.05,
+        "barWidth": 0.73,
+        "colorByField": "Kills",
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        },
+        "xField": "Killer",
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum by(player)(\r\n  count_over_time(\r\n    {job=\"7d2d\",rebirth_run=\"1\"} |= \"killed by\"\r\n    | regexp `Entity (?P<victim>.+) (?P<victimID>\\d+) killed by (?P<player>.+) (?P<playerID>\\d+)`\r\n    [$__range]\r\n  )\r\n)",
+          "queryType": "instant",
+          "refId": "A"
+        }
+      ],
+      "title": "Kills by any player, dog or zombie",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "player": false
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Value #A": "Kills",
+              "player": "Killer"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Kills"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {
+            "limitField": "12"
+          }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "effc1dwy7ru2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": true,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "right",
+            "axisSoftMin": 1,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "fieldMinMax": true,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "deaths"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 19,
+        "w": 12,
+        "x": 0,
+        "y": 21
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": false,
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "sum by(player)(\r\n  count_over_time(\r\n    {job=\"7d2d\",rebirth_run=\"1\"} |= \"died\" \r\n    | regexp `Player '(?P<player>[^']+)' died`\r\n    | player != \"\"\r\n    [$__range]\r\n  )\r\n)",
+          "legendFormat": "{{player}}",
+          "queryType": "range",
+          "refId": "A",
+          "step": ""
+        }
+      ],
+      "title": "Death Race",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "effc1dwy7ru2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "202"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "WhichWitch"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "171"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Lost"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "233"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Dude"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "356"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "haas2"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "550"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Bright"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "579"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Galiwyr"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 12,
+        "x": 12,
+        "y": 26
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "max by(playerid) (\r\n  last_over_time(\r\n    {job=\"7d2d\",rebirth_run=\"1\"} |= \"gameStage\"\r\n    | regexp `Player id (?P<playerid>\\d+), gameStage (?P<gamestage>\\d+)`\r\n    | unwrap gamestage\r\n    [$__interval]\r\n  )\r\n)",
+          "legendFormat": "",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "GameStage per Player",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "valueLabel": "playerid"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 40
+      },
+      "id": 15,
+      "panels": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "description": "max per day",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "showValues": false,
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "noValue": "0",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 12,
+            "w": 12,
+            "x": 0,
+            "y": 41
+          },
+          "id": 11,
+          "interval": "1d",
+          "options": {
+            "legend": {
+              "calcs": [
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "pluginVersion": "12.4.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "effc1dwy7ru2ob"
+              },
+              "direction": "backward",
+              "editorMode": "code",
+              "expr": "  max_over_time(\r\n  {job=\"7d2d\",rebirth_run=\"1\"} |~ \"INF Time: .*\"\r\n  | regexp `Ply: (?P<Ply>\\d+) Zom: \\d+ Ent: \\d+ `\r\n  | label_format metric=\"Ply\"\r\n  | unwrap Ply\r\n  [$__interval]\r\n) by (metric)\r\n",
+              "legendFormat": "",
+              "queryType": "range",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "effc1dwy7ru2ob"
+              },
+              "direction": "backward",
+              "editorMode": "code",
+              "expr": "max_over_time(\r\n    {job=\"7d2d\",rebirth_run=\"1\"} |~ \"INF Time: .*\"\r\n    | regexp `Ply: \\d+ Zom: (?P<Zom>\\d+) Ent: \\d+ `\r\n    | label_format metric=\"Zom\"\r\n    | unwrap Zom\r\n    [$__interval]\r\n) by (metric)",
+              "queryType": "range",
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "effc1dwy7ru2ob"
+              },
+              "direction": "backward",
+              "editorMode": "code",
+              "expr": "max_over_time(\r\n    {job=\"7d2d\",rebirth_run=\"1\"} |~ \"INF Time: .*\"\r\n    | regexp `Ply: \\d+ Zom: \\d+ Ent: (?P<Ent>\\d+) `\r\n    | label_format metric=\"Ent\"\r\n    | unwrap Ent\r\n    [$__interval]\r\n) by (metric)",
+              "queryType": "range",
+              "refId": "C"
+            },
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "effc1dwy7ru2ob"
+              },
+              "direction": "backward",
+              "editorMode": "code",
+              "expr": "max_over_time(\r\n    {job=\"7d2d\",rebirth_run=\"1\"} |~ \"INF Time: .*\"\r\n    | regexp ` CO: (?P<CO>\\d+) `\r\n    | label_format metric=\"CO\"\r\n    | unwrap CO\r\n    [$__interval]\r\n) by (metric)",
+              "queryType": "range",
+              "refId": "D"
+            }
+          ],
+          "title": "Number of objects",
+          "transformations": [
+            {
+              "id": "labelsToFields",
+              "options": {
+                "keepLabels": [
+                  "Ent",
+                  "Zom",
+                  "Ply"
+                ],
+                "mode": "columns",
+                "valueLabel": "metric"
+              }
+            },
+            {
+              "id": "joinByField",
+              "options": {
+                "byField": "Time",
+                "mode": "outer"
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "includeByName": {},
+                "indexByName": {},
+                "orderByMode": "manual",
+                "renameByName": {
+                  "Value": "Players",
+                  "Value 1": "Players",
+                  "Value 2": "Zombies",
+                  "Value 3": "Entities",
+                  "Value 4": "CO",
+                  "{detected_level=\"INF\", filename=\"/7d2d/7DaysToDieServer_Data/output_log__2026-03-01__00-49-13.txt\", host=\"7d2d.remote\", job=\"7d2d\", level=\"INF\", service_name=\"7d2d\"}": "",
+                  "{detected_level=\"INF\", filename=\"/7d2d/7DaysToDieServer_Data/output_log__2026-03-05__00-29-21.txt\", host=\"7d2d.remote\", job=\"7d2d\", level=\"INF\", service_name=\"7d2d\"}": "Haha",
+                  "{detected_level=\"INF\", filename=\"/7d2d/7DaysToDieServer_Data/output_log__2026-03-05__20-26-28.txt\", host=\"7d2d.remote\", job=\"7d2d\", level=\"INF\", service_name=\"7d2d\"}": "",
+                  "{detected_level=\"INF\", filename=\"/7d2d/7DaysToDieServer_Data/output_log__2026-03-05__23-21-29.txt\", host=\"7d2d.remote\", job=\"7d2d\", level=\"INF\", service_name=\"7d2d\"}": "Yes",
+                  "{detected_level=\"INF\", filename=\"/7d2d/7DaysToDieServer_Data/output_log__2026-03-08__19-52-24.txt\", host=\"7d2d.remote\", job=\"7d2d\", level=\"INF\", service_name=\"7d2d\"}": "No",
+                  "{}": ""
+                }
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "showValues": false,
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "noValue": "0",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Heap"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "decmbytes"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Max"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "decmbytes"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "RSS"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "decmbytes"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 12,
+            "w": 12,
+            "x": 12,
+            "y": 41
+          },
+          "id": 12,
+          "interval": "1h",
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "12.4.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "effc1dwy7ru2ob"
+              },
+              "direction": "backward",
+              "editorMode": "code",
+              "expr": "  max_over_time(\r\n  {job=\"7d2d\",rebirth_run=\"1\"} |~ \"INF Time: .*\"\r\n  | regexp `Heap: (?P<heap>[\\d\\.]+)MB`\r\n  | label_format metric=\"heap\"\r\n  | unwrap heap\r\n  [$__interval]\r\n) by (metric)\r\n",
+              "queryType": "range",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "effc1dwy7ru2ob"
+              },
+              "direction": "backward",
+              "editorMode": "code",
+              "expr": "  max_over_time(\r\n  {job=\"7d2d\",rebirth_run=\"1\"} |~ \"INF Time: .*\"\r\n  | regexp `Max: (?P<max>[\\d\\.]+)MB`\r\n  | label_format metric=\"Max\"\r\n  | unwrap max\r\n  [$__interval]\r\n) by (metric)",
+              "queryType": "range",
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "effc1dwy7ru2ob"
+              },
+              "direction": "backward",
+              "editorMode": "code",
+              "expr": "  max_over_time(\r\n  {job=\"7d2d\",rebirth_run=\"1\"} |~ \"INF Time: .*\"\r\n  | regexp `RSS: (?P<rss>[\\d\\.]+)MB`\r\n  | label_format metric=\"RSS\"\r\n  | unwrap rss\r\n  [$__interval]\r\n) by (metric)",
+              "queryType": "range",
+              "refId": "C"
+            },
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "effc1dwy7ru2ob"
+              },
+              "direction": "backward",
+              "editorMode": "code",
+              "expr": "  max_over_time(\r\n  {job=\"7d2d\",rebirth_run=\"1\"} |~ \"INF Time: .*\"\r\n  | regexp `Chunks: (?P<Chunks>[\\d\\.]+) `\r\n  | label_format metric=\"Chunks\"\r\n  | unwrap Chunks\r\n  [$__interval]\r\n) by (metric)",
+              "queryType": "range",
+              "refId": "D"
+            }
+          ],
+          "title": "Memory usage",
+          "transformations": [
+            {
+              "id": "labelsToFields",
+              "options": {
+                "valueLabel": "metric"
+              }
+            },
+            {
+              "id": "joinByField",
+              "options": {
+                "byField": "Time",
+                "mode": "outer"
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "includeByName": {},
+                "indexByName": {},
+                "renameByName": {
+                  "Max": "Max",
+                  "RSS": "RSS",
+                  "heap": "Heap"
+                }
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "effc1dwy7ru2ob"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "always",
+                "showValues": false,
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "displayName": "Time",
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "m"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 53
+          },
+          "id": 16,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "12.4.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "effc1dwy7ru2ob"
+              },
+              "direction": "backward",
+              "editorMode": "code",
+              "expr": "  max_over_time(\r\n  {job=\"7d2d\",rebirth_run=\"1\"} |~ \"INF Time: .*\"\r\n  | regexp `INF Time: (?P<gametime>\\d+\\.\\d\\d)m `\r\n  | label_format metric=\"gametime\"\r\n  | unwrap gametime\r\n  [$__interval]\r\n) by (metric)",
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "GameTime since last server restart",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Server Stuff",
+      "type": "row"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "Dude|haas2|Lost|Galiwyr|Bright|WhichWitch",
+          "value": "Dude|haas2|Lost|Galiwyr|Bright|WhichWitch"
+        },
+        "description": "",
+        "hide": 2,
+        "name": "gg_player_list",
+        "query": "Dude|haas2|Lost|Galiwyr|Bright|WhichWitch",
+        "skipUrlSync": true,
+        "type": "constant"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "1",
+          "value": "1"
+        },
+        "description": "",
+        "hide": 2,
+        "label": "Rebirth Run",
+        "name": "rebirth_run",
+        "options": [],
+        "query": "1,2",
+        "type": "custom",
+        "valuesFormat": "csv"
+      }
+    ]
+  },
+  "time": {
+    "from": "2026-02-28T23:00:00.000Z",
+    "to": "now"
+  },
+  "timepicker": {
+    "hidden": true,
+    "refresh_intervals": [
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "GG 7 Days To Die - Rebirth",
+  "uid": "adjlh56",
+  "version": 90,
+  "weekStart": ""
+}

@@ -1,0 +1,30 @@
+[Unit]
+Description=7D2D dedicated server Rebirth RUN 2
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+#ExecStartPre=/home/kevin/Steam/steamcmd.sh +force_install_dir "/srv/media/7dtd" +login anonymous +app_update 294420 validate +quit
+ExecStart=/bin/bash /7d2d_run2/startserver.sh -configfile=serverconfig.xml
+User=steam
+Group=steam
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=7D2D_rebirth_run2
+
+#Restart=on-failure
+Restart=always
+RestartSec=10
+StartLimitIntervalSec=300
+StartLimitBurst=5
+OnFailure=7d2d-failure.service
+
+ExecStartPost=/usr/bin/bash -c 'echo "Service REBIRTH RUN 2 restarted at $(date)" >> /home/steam/failures.log'
+WorkingDirectory=/7d2d_run2
+Type=simple
+# Below added because of complaint in server start for limits.conf (steam soft nofile 10240)
+LimitNOFILE=10240
+
+[Install]
+WantedBy=multi-user.target

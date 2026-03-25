@@ -1,7 +1,13 @@
-discord_user_webhook="https://discord.com/api/webhooks/..."
-discord_system_webhook="https://discord.com/api/webhooks/..."
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+discord_user_webhook = os.getenv("DISCORD_USER_WEBHOOK")
+discord_system_webhook = os.getenv("DISCORD_SYSTEM_WEBHOOK")
+
 LOG_DIR = "/7d2d/7DaysToDieServer_Data"
-LOG_PREFIX = "output_log__"
+#LOG_DIR = "/7d2d_run2/7DaysToDieServer_Data"
+LOG_MATCH = "output_log__20*_Rebirth_run_1.txt"
 
 DEATH_MESSAGES=[
     "Player {player} died!",
@@ -25,3 +31,4 @@ DEATH_MESSAGES=[
     "Player {player} counted on his team to be a team.",
     "Player {player} shouldn't have insulted the medic.",
     "Player {player} shouldn't have trusted the medic.",
+]
