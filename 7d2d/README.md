@@ -31,6 +31,8 @@ Extract the zip file in /7d2d/Mods
 [Rebirth] Failed to find TraderPrefabs.xml
 ```
 
+Fixed by last two by:
+
 ```bash
 cd /7d2d_run2/Mods/zzz_REBIRTH__Utils/
 sudo -u steam cp hivePrefabs.xml HivePrefabs.xml
