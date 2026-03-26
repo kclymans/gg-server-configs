@@ -6,7 +6,8 @@ import re
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from notif import send_msg, send_sys_msg
-from config import LOG_DIR, LOG_PREFIX, DEATH_MESSAGES
+from config import LOG_DIR, LOG_MATCH, DEATH_MESSAGES
+import fnmatch
 
 class LogEventHandler(FileSystemEventHandler):
     def __init__(self):
@@ -17,7 +18,7 @@ class LogEventHandler(FileSystemEventHandler):
 
     def update_current_file(self, init=False):
         """Finds the latest log file and opens it."""
-        search_path = os.path.join(LOG_DIR, f"{LOG_PREFIX}*")
+        search_path = os.path.join(LOG_DIR, f"{LOG_MATCH}")
         files = glob.glob(search_path)
 
         if not files:
@@ -47,7 +48,12 @@ class LogEventHandler(FileSystemEventHandler):
 
     def on_created(self, event):
         """Called when a file or directory is created."""
-        if not event.is_directory and os.path.basename(event.src_path).startswith(LOG_PREFIX):
+        if event.is_directory:
+            return
+        filename = os.path.basename(
+            event.src_path.decode() if isinstance(event.src_path, bytes) else event.src_path
+        )
+        if fnmatch.fnmatch(fr'filename', LOG_MATCH):
             self.update_current_file(init=False)
 
     def on_modified(self, event):
@@ -96,7 +102,7 @@ class LogEventHandler(FileSystemEventHandler):
         # You died
         if 'GMSG: Player' in line \
         and 'died' in line:
-            match = re.search(r"Player '(.*?)' died", line)
+            match = re.search(r"Player '(.+)' died", line)
             if match:
                 name = match.group(1)
                 send_msg(self.randomDied(name))
@@ -110,7 +116,7 @@ if __name__ == "__main__":
     observer = Observer()
     observer.schedule(event_handler, path=LOG_DIR, recursive=False)
     observer.start()
-    print(f"Monitoring {LOG_DIR} for {LOG_PREFIX}...")
+    print(f"Monitoring {LOG_DIR} for {LOG_MATCH}...")
 
     def teardown(signum, frame):
         observer.stop()

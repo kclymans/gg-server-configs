@@ -2,8 +2,9 @@
 Description=Run 7DTD Time Reset every X minutes
 
 [Timer]
-OnBootSec=1min
-OnUnitActiveSec=2min
+OnCalendar=*-*-* *:*:00
+Persistent=true
+
 
 [Install]
 WantedBy=timers.target

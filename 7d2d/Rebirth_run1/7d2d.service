@@ -4,6 +4,7 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
+#ExecStartPre=/home/kevin/Steam/steamcmd.sh +force_install_dir "/srv/media/7dtd" +login anonymous +app_update 294420 validate +quit
 ExecStart=/bin/bash /7d2d/startserver.sh -configfile=serverconfig.xml
 User=steam
 Group=steam
@@ -12,6 +13,7 @@ StandardOutput=journal
 StandardError=journal
 SyslogIdentifier=7D2D
 
+#Restart=on-failure
 Restart=always
 RestartSec=10
 StartLimitIntervalSec=300

@@ -1,0 +1,62 @@
+loki.source.file "logs" {
+  targets    = [
+    {__path__ = "/7d2d/7DaysToDieServer_Data/output_log__*.txt"},
+    {__path__ = "/7d2d_run2/7DaysToDieServer_Data/output_log__*.txt"},
+  ]
+  forward_to = [loki.process.sevendaystodie.receiver]
+  file_match {
+    enabled = true
+    sync_period = "10s"
+  }
+}
+
+loki.process "sevendaystodie" {
+
+  stage.drop {
+    expression = "^[^0-9].*"
+  }
+
+  stage.regex {
+    source = "filename"
+    expression = "Rebirth_run_(?P<rebirth_run>\\d+)"
+  }
+
+/*
+    stage.labels {
+    values = {
+      rebirth_run = "rebirth_run"
+    }
+  }
+*/
+
+  stage.regex {
+    expression = "^(?P<timestamp>\\S+)\\s+(?P<game_time>\\S+)\\s+(?P<level>[A-Z]+)\\s+(?P<message>.*)"
+  }
+
+  stage.timestamp {
+    source = "timestamp"
+    format = "2006-01-02T15:04:05"
+    location = "Europe/Brussels"
+  }
+  stage.static_labels {
+    values = {
+      job = "7d2d",
+      host = "7d2d.remote",
+    }
+  }
+
+  stage.labels {
+    values = {
+      level="level",
+      rebirth_run = "rebirth_run",
+    }
+  }
+
+  forward_to = [loki.write.loki.receiver]
+}
+
+loki.write "loki" {
+  endpoint {
+    url = "http://loki.remote:3100/loki/api/v1/push"
+  }
+}

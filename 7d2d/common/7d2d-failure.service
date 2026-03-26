@@ -1,0 +1,6 @@
+[Unit]
+Description=7D2D failure logger
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c 'echo "7D2D crashed at $(date)" >> /home/steam/failures.log'

@@ -9,6 +9,11 @@ import os
 from dotenv import load_dotenv # type: ignore
 load_dotenv()
 
+REBIRTH_RUN="1"
+LOG_FOLDER="/7d2d/7DaysToDieServer_Data"
+HOST = "127.0.0.1"
+PORT = 8081
+
 logger = logging.getLogger("7D2D-TimeReset")
 logger.setLevel(logging.INFO)
 FORMAT = '%(asctime)s %(levelname)s %(message)s'
@@ -21,7 +26,9 @@ stdout_handler = logging.StreamHandler(sys.stdout)
 stdout_handler.setFormatter(formatter)
 
 # file handler
-file_handler = logging.FileHandler('/7d2d/7DaysToDieServer_Data/output_log__TimeReset.txt')
+# Alloy extracts the run number from the filename for use as tag in Loki queries for the Grafana dashboard
+file_handler = logging.FileHandler(f'/7d2d/7DaysToDieServer_Data/output_log__TimeReset__Rebirth_run_{REBIRTH_RUN}.txt')
+
 file_handler.setFormatter(formatter_loki)
 
 logger.addHandler(stdout_handler)
@@ -86,7 +93,7 @@ async def main():
         # server unavailable → just exit (systemd will try again later)
         logger.critical(f"Connection failed: {e}")
         sys.exit(0)
-    logger.debug("Connection successful")
+    logger.info(f"Connection to telnet server {HOST}:{PORT} successful")
 
     ## Logging in
     try:
@@ -96,12 +103,15 @@ async def main():
         logger.debug(f"auth_output: {auth_output}")
         if "Password incorrect" in auth_output:
             logger.critical("Telnet authentication failed")
+            await send_command(writer, reader, "exit")
             writer.close()
             await writer.wait_closed()
             sys.exit(1)
     except Exception as e:
         logger.critical(f"Password failed: {e}")
+        await send_command(writer, reader, "exit")
         writer.close()
+        await writer.wait_closed()
         sys.exit(1)
 
     ## Getting players
@@ -109,11 +119,21 @@ async def main():
     logger.debug("Getting number of online players")
     try:
         list_output = await send_command(writer, reader, "listplayers")
-        players = count_players(list_output)
-        logger.info(f"There are {players} players online")
     except Exception as e:
         logger.critical(f"Getting players failed: {e}")
+        await send_command(writer, reader, "exit")
         writer.close()
+        await writer.wait_closed()
+        sys.exit(1)
+    players = count_players(list_output)
+    if players > 0:
+        logger.info(f"There are {players} players online")
+    else:
+        await send_command(writer, reader, "exit")
+        writer.close()
+        await writer.wait_closed()
+        logger.debug("No players online, quitting...")
+        sys.exit(0)
     logger.debug(f"players has type {type(players)}")
     assert isinstance(players, int), f"players should be an int, got {type(players)}"
 
@@ -128,7 +148,9 @@ async def main():
         logger.info(f"Detected day {day}, hour {hour}, minute {min}")
     except Exception as e:
         logger.critical(f"Getting time failed: {e}")
+        await send_command(writer, reader, "exit")
         writer.close()
+        await writer.wait_closed()
         sys.exit(1)
     logger.debug(f"day has type {type(day)}")
     logger.debug(f"hour has type {type(hour)}")
@@ -138,11 +160,11 @@ async def main():
     assert isinstance(min, int), f"min should be an int, got {type(min)}"
     
     ## Main Logic
-    if players == 0:
-        logger.debug("No players online, quitting...")
-        sys.exit(0)
-    elif players > MAX_PLAYERS:
+    if players > MAX_PLAYERS:
         logger.debug(f"More then {MAX_PLAYERS} players online, quitting...")
+        await send_command(writer, reader, "exit")
+        writer.close()
+        await writer.wait_closed()
         sys.exit(0)
     
     if hour == RESET_TRIGGER_HOUR:
@@ -156,24 +178,31 @@ async def main():
                 logger.info(f"Set time to {res_settime}")
             else:
                 logger.warning(f"Failed to set time: {settime_output}")
-            writer.close()
-            await writer.wait_closed()
         except Exception as e:
             logger.critical(f"settime failed: {e}")
+            await send_command(writer, reader, "exit")
             writer.close()
             await writer.wait_closed()
         ## Send message
         try:
             say_output = await send_command(writer, reader, f"say \"Resetting time to 06:00\"")
-            res_say = check_settime(say_output)
+            res_say = check_say(say_output)
             if res_say:
                 logger.info(f"Sent message: {res_say}")
             else:
                 logger.warning(f"Failed to send message: {say_output}")
         except Exception as e:
             logger.critical(f"say failed: {e}")
+        await send_command(writer, reader, "exit")
+        writer.close()
+        await writer.wait_closed()
+        sys.exit(0)
     else:
         logger.debug(f"Not {RESET_TRIGGER_HOUR} hour, quitting...")
+        await send_command(writer, reader, "exit")
+        writer.close()
+        await writer.wait_closed()
+        sys.exit(0)
 
 if __name__ == "__main__":
     asyncio.run(main())
