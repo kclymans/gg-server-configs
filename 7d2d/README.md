@@ -23,6 +23,20 @@ Installed version: **REBIRTH EXPERIMENTAL 2025.12.08 2115 - 7dtd v2.4 b7.zip**
 
 Extract the zip file in /7d2d/Mods
 
+## Rebirth - to be fixed?
+
+```log
+2026-03-26T00:07:48 236.332 WRN [TheDescent] no cavemap found for world 'West Gepokoje Valley'
+[Rebirth] Failed to find HivePrefabs.xml
+[Rebirth] Failed to find TraderPrefabs.xml
+```
+
+```bash
+cd /7d2d_run2/Mods/zzz_REBIRTH__Utils/
+sudo -u steam cp hivePrefabs.xml HivePrefabs.xml
+sudo -u steam cp traderPrefabs.xml TraderPrefabs.xml
+```
+
 # Custom services
 
 - 7d2d_notif.service: discord notifs for when ppl log in or die
