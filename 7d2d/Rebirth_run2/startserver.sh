@@ -1,6 +1,5 @@
 #!/bin/bash
 cd /7d2d_run2
-
 PARAMS=$@
 
 CONFIGFILE=
@@ -26,19 +25,13 @@ else
 fi
 
 export LD_LIBRARY_PATH=.
-#export MALLOC_CHECK_=0
 
-# Temp static server config again
-exec ./7DaysToDieServer.x86_64 -logfile /7d2d_run2/7DaysToDieServer_Data/output_log__`date +%Y-%m-%d__%H-%M-%S`__Rebirth_run_2.txt -quit -batchmode -nographics -dedicated $PARAMS
-
-exit 0
-
-remote_serverconfig=https://raw.githubusercontent.com/kclymans/gg-server-configs/refs/heads/main/7d2d/serverconfig.xml
-remote_customoptions=https://raw.githubusercontent.com/kclymans/gg-server-configs/refs/heads/main/7d2d/CustomGameOptions.xml
+remote_serverconfig=https://raw.githubusercontent.com/kclymans/gg-server-configs/refs/heads/main/7d2d/Rebirth_run2/serverconfig.xml
+remote_customoptions=https://raw.githubusercontent.com/kclymans/gg-server-configs/refs/heads/main/7d2d/Rebirth_run2/CustomGameOptions.xml
 source "$HOME/.secrets"
 
 # Define variables to check
-vars=("SERVER_PASS")
+vars=("SERVER_PASS" "TELNET_PASS")
 
 # Loop through each variable to check if it is set and non-empty
 for var in "${vars[@]}"; do
@@ -55,11 +48,16 @@ done
 
 # Download the remote configs and update placeholders
 CONFIGFILE_DIR=$(dirname "$CONFIGFILE")
-CUSTOM_OPTIONS_FILE="${CONFIGFILE_DIR}/CustomGameOptions.xml"
+CUSTOM_OPTIONS_FILE="${CONFIGFILE_DIR}/GGData_Rebirth_run_2/RebirthData/CustomGameOptions.xml"
 
-curl -s -o "$CONFIGFILE" "$remote_serverconfig" && \
-sed -i -e "s|SERVER_PASS|$SERVER_PASS|g" "$CONFIGFILE"
+curl -f -s -o "$CONFIGFILE" "$remote_serverconfig" && \
+echo "Downloaded ${CONFIGFILE} from ${remote_serverconfig}" && \
+sed -i -e "s|SERVER_PASS|$SERVER_PASS|g" "$CONFIGFILE"  && \
+sed -i -e "s|TELNET_PASS|$TELNET_PASS|g" "$CONFIGFILE" || \
+echo "WARNING: FAILED to download ${CONFIGFILE} from ${remote_serverconfig}"
 
-curl -s -o "$CUSTOM_OPTIONS_FILE" "$remote_customoptions"
+curl -f -s -o "$CUSTOM_OPTIONS_FILE" "$remote_customoptions" && \
+echo "Downloaded ${CUSTOM_OPTIONS_FILE} from ${remote_customoptions}" || \
+echo "WARNING: FAILED to download ${CUSTOM_OPTIONS_FILE} from ${remote_customoptions}"
 
 exec ./7DaysToDieServer.x86_64 -logfile /7d2d_run2/7DaysToDieServer_Data/output_log__`date +%Y-%m-%d__%H-%M-%S`__Rebirth_run_2.txt -quit -batchmode -nographics -dedicated $PARAMS

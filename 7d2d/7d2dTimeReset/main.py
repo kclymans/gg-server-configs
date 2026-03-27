@@ -9,10 +9,10 @@ import os
 from dotenv import load_dotenv # type: ignore
 load_dotenv()
 
-REBIRTH_RUN="1"
-LOG_FOLDER="/7d2d/7DaysToDieServer_Data"
+REBIRTH_RUN="2"
+LOG_FOLDER="/7d2d_run2/7DaysToDieServer_Data"
 HOST = "127.0.0.1"
-PORT = 8081
+PORT = 8091
 
 logger = logging.getLogger("7D2D-TimeReset")
 logger.setLevel(logging.INFO)
@@ -27,16 +27,13 @@ stdout_handler.setFormatter(formatter)
 
 # file handler
 # Alloy extracts the run number from the filename for use as tag in Loki queries for the Grafana dashboard
-file_handler = logging.FileHandler(f'/7d2d/7DaysToDieServer_Data/output_log__TimeReset__Rebirth_run_{REBIRTH_RUN}.txt')
+file_handler = logging.FileHandler(f'{LOG_FOLDER}/output_log__TimeReset__Rebirth_run_{REBIRTH_RUN}.txt')
 
 file_handler.setFormatter(formatter_loki)
 
 logger.addHandler(stdout_handler)
 logger.addHandler(file_handler)
 
-
-HOST = "127.0.0.1"
-PORT = 8081
 PASSWORD = os.getenv("TNP")
 # [1-MAX_PLAYERS] will reset time
 MAX_PLAYERS = 3

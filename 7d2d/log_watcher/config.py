@@ -5,9 +5,9 @@ load_dotenv()
 discord_user_webhook = os.getenv("DISCORD_USER_WEBHOOK")
 discord_system_webhook = os.getenv("DISCORD_SYSTEM_WEBHOOK")
 
-LOG_DIR = "/7d2d/7DaysToDieServer_Data"
-#LOG_DIR = "/7d2d_run2/7DaysToDieServer_Data"
-LOG_MATCH = "output_log__20*_Rebirth_run_1.txt"
+#LOG_DIR = "/7d2d/7DaysToDieServer_Data"
+LOG_DIR = "/7d2d_run2/7DaysToDieServer_Data"
+LOG_MATCH = "output_log__20*_Rebirth_run_2.txt"
 
 DEATH_MESSAGES=[
     "Player {player} died!",
