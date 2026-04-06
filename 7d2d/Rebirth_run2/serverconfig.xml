@@ -60,7 +60,7 @@
         <property name="GameMode"                                               value="GameModeSurvival"/>      <!-- GameModeSurvival -->
 
         <!-- Difficulty -->
-        <property name="GameDifficulty"                                 value="3"/>                                     <!-- 0 - 5, 0=easiest, 5=hardest -->
+        <property name="GameDifficulty"                                 value="4"/>                                     <!-- 0 - 5, 0=easiest, 5=hardest -->
         <property name="BlockDamagePlayer"                              value="100"/>                           <!-- How much damage do players to blocks (percentage in whole numbers) -->
         <property name="BlockDamageAI"                                  value="100"/>                           <!-- How much damage do AIs to blocks (percentage in whole numbers) -->
         <property name="BlockDamageAIBM"                                value="100"/>                           <!-- How much damage do AIs during blood moons to blocks (percentage in whole numbers) -->
