@@ -88,7 +88,7 @@
     <config name="CustomMutatedSpawns" value="afterday14" />
     <config name="CustomKamikaze" value="notpoi" />
     <config name="CustomDemos" value="always" />
-    <config name="CustomSeekers" value="hordenightonly" />
+    <config name="CustomSeekers" value="never" />
     <config name="CustomZombieBuffers" value="true" />
     <config name="CustomKnockdown" value="true" />
     <config name="CustomEntityEvents" value="always" />
