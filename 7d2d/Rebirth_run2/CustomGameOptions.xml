@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <customgameoptions>
-    <config name="CustomScenario" value="none" />
+    <config name="CustomScenario" value="purge" />
     <config name="CustomInfestedHives" value="no" />
     <config name="CustomSkipSpawnConfirmation" value="false" />
     <config name="CustomBiomeSpawn" value="random" />
@@ -66,7 +66,7 @@
     <config name="CustomScreamerNights" value="lower" />
     <config name="CustomScreamerMax" value="6" />
     <config name="CustomGamestageMultiplier" value="100%" />
-    <config name="CustomPOIRisk" value="default" />
+    <config name="CustomPOIRisk" value="high" />
     <config name="CustomAscension" value="true" />
     <config name="CustomNaturalSelection" value="nohordenightcount" />
     <config name="CustomRebirth" value="true" />
