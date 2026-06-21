@@ -2,6 +2,7 @@ loki.source.file "logs" {
   targets    = [
     {__path__ = "/7d2d/7DaysToDieServer_Data/output_log__*.txt"},
     {__path__ = "/7d2d_run2/7DaysToDieServer_Data/output_log__*.txt"},
+    {__path__ = "/7d2d_run3_purge/7DaysToDieServer_Data/output_log__*.txt"},
   ]
   forward_to = [loki.process.sevendaystodie.receiver]
   file_match {
