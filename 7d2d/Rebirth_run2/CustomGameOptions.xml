@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <customgameoptions>
-    <config name="CustomScenario" value="purge" />
+    <config name="CustomScenario" value="none" />
     <config name="CustomInfestedHives" value="no" />
     <config name="CustomSkipSpawnConfirmation" value="false" />
     <config name="CustomBiomeSpawn" value="random" />
