@@ -3,6 +3,9 @@
 Description=7D2D dedicated server Rebirth RUN 3 - The Purge
 After=network-online.target
 Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+OnFailure=7d2d-failure.service
 
 [Service]
 ExecStart=/bin/bash /7d2d_run3_purge/startserver.sh -configfile=serverconfig.xml
@@ -16,15 +19,7 @@ SyslogIdentifier=7D2D_rebirth_run3
 #Restart=on-failure
 Restart=always
 RestartSec=10
-StartLimitIntervalSec=300
-StartLimitBurst=5
-OnFailure=7d2d-failure.service
 
 ExecStartPost=/usr/bin/bash -c 'echo "Service REBIRTH RUN 3 restarted at $(date)" >> /home/steam/failures.log'
 WorkingDirectory=/7d2d_run3_purge
 Type=simple
-# Below added because of complaint in server start for limits.conf (steam soft nofile 10240)
-LimitNOFILE=10240
-
-[Install]
-WantedBy=multi-user.target
