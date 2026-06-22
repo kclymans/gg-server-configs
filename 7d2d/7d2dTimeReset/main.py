@@ -9,10 +9,10 @@ import os
 from dotenv import load_dotenv # type: ignore
 load_dotenv()
 
-REBIRTH_RUN="2"
-LOG_FOLDER="/7d2d_run2/7DaysToDieServer_Data"
+REBIRTH_RUN="3"
+LOG_FOLDER="/7d2d_run3_purge/7DaysToDieServer_Data"
 HOST = "127.0.0.1"
-PORT = 8091
+PORT = 8101
 
 logger = logging.getLogger("7D2D-TimeReset")
 logger.setLevel(logging.INFO)
@@ -46,7 +46,7 @@ async def send_command(writer, reader, command):
     writer.write(command + "\n")
     await writer.drain()
     await asyncio.sleep(1)
-    return await reader.read(4096)
+    return await reader.read(40960)
 
 def count_players(output):
     # Total of 1 in the game

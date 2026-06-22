@@ -50,10 +50,8 @@ class LogEventHandler(FileSystemEventHandler):
         """Called when a file or directory is created."""
         if event.is_directory:
             return
-        filename = os.path.basename(
-            event.src_path.decode() if isinstance(event.src_path, bytes) else event.src_path
-        )
-        if fnmatch.fnmatch(fr'filename', LOG_MATCH):
+        filename = os.fsdecode(os.path.basename(event.src_path))
+        if fnmatch.fnmatch(filename, LOG_MATCH):
             self.update_current_file(init=False)
 
     def on_modified(self, event):
